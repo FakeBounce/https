@@ -16,9 +16,9 @@
 	// $signature = 'AFcWxV21C7fd0v3bYYYRCpSSRl31AGKqrjDgGTTcbzDUtxadTnbD6awv'; // Signature de l'API
 	
 	//Sandbox
-	$user = 'romane_b12-facilitator-1_api1.myges.fr'; // Utilisateur API
-	$pass = '4RP8G3KM6R4YWNPA'; // Mot de passe API
-	$signature = 'AQU0e5vuZCvSg-XJploSa.sGUDlpA0Pcla5gynr5-NWk7PjD5tWFa8cT'; // Signature de l'API
+		  $user = 'romane_b12-facilitator-1_api1.myges.fr'; // Utilisateur API
+	  $pass = '4RP8G3KM6R4YWNPA'; // Mot de passe API
+	  $signature = 'AQU0e5vuZCvSg-XJploSa.sGUDlpA0Pcla5gynr5-NWk7PjD5tWFa8cT'; // Signature de l'API
 
 	$api_paypal = $api_paypal.'VERSION='.$version.'&USER='.$user.'&PWD='.$pass.'&SIGNATURE='.$signature; // Ajoute tous les paramètres
 

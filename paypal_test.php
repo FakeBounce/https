@@ -1,27 +1,38 @@
 <?php
  
 session_start();
-include("api_paypal.php"); 
-$_SESSION['name_0'] = 'nom';
-$_SESSION['prix'] = 50;
+include("api_paypal.php");
+
+$_SESSION['name_0'] = 'test1';
+$_SESSION['name_1'] = 'test2';
+$_SESSION['prix_0'] = 5;
+$_SESSION['prix_1'] = 10;
 $_SESSION['desc'] = 'description';
 $requete = construit_url_paypal();
 $requete = $requete."&METHOD=SetExpressCheckout".
 			"&CANCELURL=".urlencode("http://www.localhost/cancel.php").
 			"&RETURNURL=".urlencode("http://www.localhost/return.php").
-			"&PAYMENTREQUEST_0_AMT=".$_SESSION['prix']."".
+			"&PAYMENTREQUEST_0_AMT=".$_SESSION['prix_0']."".
 			"&PAYMENTREQUEST_0_CURRENCYCODE=EUR".
 			"&PAYMENTREQUEST_0_SELLERPAYPALACCOUNTID=".urlencode("romane_b12-facilitator-1@myges.fr").
 			"&PAYMENTREQUEST_0_PAYMENTREQUESTID=".urlencode("Projet https :".$_SESSION['name_0']).
 			"&L_PAYMENTREQUEST_0_NAME0=".urlencode($_SESSION['name_0']).
 			"&L_PAYMENTREQUEST_0_QTY0=1".
-			"&L_PAYMENTREQUEST_0_AMT0=".$_SESSION['prix']."".
+			"&L_PAYMENTREQUEST_0_AMT0=".$_SESSION['prix_0']."".
+			"&PAYMENTREQUEST_1_AMT=".$_SESSION['prix_1']."".
+			"&PAYMENTREQUEST_1_CURRENCYCODE=EUR".
+			"&PAYMENTREQUEST_1_SELLERPAYPALACCOUNTID=".urlencode("romane_b12-facilitator-1@myges.fr").
+			"&PAYMENTREQUEST_1_PAYMENTREQUESTID=".urlencode("Projet https :".$_SESSION['name_1']).
+			"&L_PAYMENTREQUEST_1_NAME0=".urlencode($_SESSION['name_1']).
+			"&L_PAYMENTREQUEST_1_QTY0=1".
+			"&L_PAYMENTREQUEST_1_AMT0=".$_SESSION['prix_1']."".
 			"&LOCALECODE=FR".
 			"&HDRIMG=".urlencode("https://media-divers.scrapmalin.com/produit/original/pochoir-a4-basketteur-R1-191401-1.jpg").
 			"&ALLOWNOTE=1".
 			"&BRANDNAME=www.lorempixel.com".
 			"&LOGOIMG=".urlencode("https://media-divers.scrapmalin.com/produit/original/pochoir-a4-basketteur-R1-191401-1.jpg")
 			;
+echo $requete;exit;
 			$ch = curl_init($requete);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

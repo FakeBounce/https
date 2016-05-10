@@ -2,7 +2,11 @@
 session_start();
 include("api_paypal.php"); // On importe la page créée précédemment
 $requete = construit_url_paypal(); // Construit les options de base
-
+include("./service/Paypal.php");
+if(is_array($_SESSION["products"])){
+	$paypal = new \Service\Paypal();
+	$call = $paypal->responsePayment($_GET['token'],$_GET['PayerID'],$_SESSION["products"]);
+}
 // On ajoute le reste des options
 // La fonction urlencode permet d'encoder au format URL les espaces, slash, deux points, etc.)
 $requete = $requete."&METHOD=DoExpressCheckoutPayment".
@@ -51,7 +55,7 @@ $requete = $requete."&METHOD=GetTransactionDetails".
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$resultat_paypal = curl_exec($ch);
-		
+		var_dump($resultat_paypal);
 		echo 'Merci beaucoup ! <br>';
 		// $liste_param_paypal = recup_param_paypal($resultat_paypal);
 		// echo 'Nom : '.$liste_param_paypal['SHIPTONAME'].'<br>';
