@@ -1,7 +1,8 @@
 <?php
 session_start();
-if(empty($_SESSION["products"])){
-    $_SESSION["products"] = array();
+if(empty($_SESSION['vendors']))
+{
+	$_SESSION['vendors'] = array();
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -20,14 +21,38 @@ if(empty($_SESSION["products"])){
 <body>
 
 <?php
-    if(isset($_GET['id']) && isset($_GET['name']) && isset($_GET['price']) && isset($_GET['desc']) && isset($_GET['qt'])){
+    if(isset($_GET['id']) && isset($_GET['name']) && isset($_GET['price']) && isset($_GET['desc']) && isset($_GET['qt']) && isset($_GET['vendor']) && isset($_GET['requestid'])){
         $product = array(
             'name' =>  $_GET['name'],
             'price' =>  $_GET['price'],
             'desc' =>  $_GET['desc'],
-            'quantity' =>  $_GET['qt']
+            'quantity' =>  $_GET['qt'],
+            'requestid' =>  $_GET['requestid']
         );
-        array_push($_SESSION['products'], $product);
+		if($_GET['vendor'] == "vendor1@gmail.com")
+		{
+			if(empty($_SESSION['vendors']['vendor1@gmail.com']))
+			{
+				$_SESSION['vendors']['vendor1@gmail.com'] = array();
+			}
+			array_push($_SESSION['vendors']['vendor1@gmail.com'], $product);
+		}
+		if($_GET['vendor'] == "vendor2@gmail.com")
+		{
+			if(empty($_SESSION['vendors']['vendor2@gmail.com']))
+			{
+				$_SESSION['vendors']['vendor2@gmail.com'] = array();
+			}
+			array_push($_SESSION['vendors']['vendor2@gmail.com'], $product);
+		}
+		if($_GET['vendor'] == "vendor3@gmail.com")
+		{
+			if(empty($_SESSION['vendors']['vendor3@gmail.com']))
+			{
+				$_SESSION['vendors']['vendor3@gmail.com'] = array();
+			}
+			array_push($_SESSION['vendors']['vendor3@gmail.com'], $product);
+		}
     }
 ?>
 
@@ -38,8 +63,8 @@ if(empty($_SESSION["products"])){
                 <img alt="0000000000000000000000000000000?d=identicon&amp;f=y" src="http://www.gravatar.com/avatar/0000000000000000000000000000000?d=identicon&amp;f=y" />
             </div>
             <div class='details'>
-                20$ -
-                <a href="index.php?id=1&name=Pizza1&price=5&desc=Pizza1&qt=1" class="btn btn-small" data-disable-with="Procesing.." data-method="post" rel="nofollow">Acheter</a>
+                5$ -
+                <a href="index.php?id=1&name=Pizza1&price=5&desc=Pizza1&qt=1&vendor=vendor1@gmail.com&requestid=pizza1" class="btn btn-small" data-disable-with="Procesing.." data-method="post" rel="nofollow">Acheter</a>
             </div>
         </div>
         <div class='span2'>
@@ -47,8 +72,8 @@ if(empty($_SESSION["products"])){
                 <img alt="0000000000000000000000000000001?d=identicon&amp;f=y" src="http://www.gravatar.com/avatar/0000000000000000000000000000001?d=identicon&amp;f=y" />
             </div>
             <div class='details'>
-                20$ -
-                <a href="index.php?id=2&name=Pizza2&price=6&desc=Pizza2&qt=1" class="btn btn-small" data-disable-with="Procesing.." data-method="post" rel="nofollow">Acheter</a>
+                6$ -
+                <a href="index.php?id=2&name=Pizza2&price=6&desc=Pizza2&qt=1&vendor=vendor1@gmail.com&requestid=pizza2" class="btn btn-small" data-disable-with="Procesing.." data-method="post" rel="nofollow">Acheter</a>
             </div>
         </div>
         <div class='span2'>
@@ -56,8 +81,8 @@ if(empty($_SESSION["products"])){
                 <img alt="0000000000000000000000000000002?d=identicon&amp;f=y" src="http://www.gravatar.com/avatar/0000000000000000000000000000002?d=identicon&amp;f=y" />
             </div>
             <div class='details'>
-                20$ -
-                <a href="index.php?id=3&name=Pizza3&price=7&desc=Pizza3&qt=1" class="btn btn-small" data-disable-with="Procesing.." data-method="post" rel="nofollow">Acheter</a>
+                7$ -
+                <a href="index.php?id=3&name=Pizza3&price=7&desc=Pizza3&qt=1&vendor=vendor2@gmail.com&requestid=pizza3" class="btn btn-small" data-disable-with="Procesing.." data-method="post" rel="nofollow">Acheter</a>
             </div>
         </div>
         <div class='span2'>
@@ -65,8 +90,8 @@ if(empty($_SESSION["products"])){
                 <img alt="0000000000000000000000000000003?d=identicon&amp;f=y" src="http://www.gravatar.com/avatar/0000000000000000000000000000003?d=identicon&amp;f=y" />
             </div>
             <div class='details'>
-                20$ -
-                <a href="index.php?id=4&name=Pizza4&price=10&desc=Pizza4&qt=1" class="btn btn-small" data-disable-with="Procesing.." data-method="post" rel="nofollow">Acheter</a>
+                10$ -
+                <a href="index.php?id=4&name=Pizza4&price=10&desc=Pizza4&qt=1&vendor=vendor3@gmail.com&requestid=pizza4" class="btn btn-small" data-disable-with="Procesing.." data-method="post" rel="nofollow">Acheter</a>
             </div>
         </div>
     </div>
@@ -85,16 +110,22 @@ if(empty($_SESSION["products"])){
                     </thead>
                     <tbody>
                     <?php
-                        foreach($_SESSION["products"] as $product){
-                    ?>
-                            <tr>
-                                <td><?php echo $product['name']; ?></td>
-                                <td><?php echo $product['desc']; ?></td>
-                                <td><?php echo $product['price']; ?></td>
-                                <td><?php echo $product['quantity']; ?></td>
-                            </tr>
-                    <?php
-                        }
+					if(isset($_SESSION["vendors"]))
+					{
+						foreach($_SESSION["vendors"] as $vendor){
+							foreach($vendor as $product){
+						?>
+								<tr>
+									<td><?php echo $product['name']; ?></td>
+									<td><?php echo $product['desc']; ?></td>
+									<td><?php echo $product['price']; ?></td>
+									<td><?php echo $product['quantity']; ?></td>
+								</tr>
+						<?php
+							}
+						}
+					}
+					var_dump($_SESSION['vendors']);
                     ?>
                     </tbody>
                 </table>
