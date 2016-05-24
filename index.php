@@ -45,13 +45,13 @@ if(empty($_SESSION['vendors']))
 			}
 			array_push($_SESSION['vendors']['vendor2@gmail.com'], $product);
 		}
-		if($_GET['vendor'] == "vendor3@gmail.com")
+		if($_GET['vendor'] == "romane_b12-facilitator-1@myges.fr")
 		{
-			if(empty($_SESSION['vendors']['vendor3@gmail.com']))
+			if(empty($_SESSION['vendors']['romane_b12-facilitator-1@myges.fr']))
 			{
-				$_SESSION['vendors']['vendor3@gmail.com'] = array();
+				$_SESSION['vendors']['romane_b12-facilitator-1@myges.fr'] = array();
 			}
-			array_push($_SESSION['vendors']['vendor3@gmail.com'], $product);
+			array_push($_SESSION['vendors']['romane_b12-facilitator-1@myges.fr'], $product);
 		}
     }
 ?>
@@ -91,7 +91,7 @@ if(empty($_SESSION['vendors']))
             </div>
             <div class='details'>
                 10$ -
-                <a href="index.php?id=4&name=Pizza4&price=10&desc=Pizza4&qt=1&vendor=vendor3@gmail.com&requestid=pizza4" class="btn btn-small" data-disable-with="Procesing.." data-method="post" rel="nofollow">Acheter</a>
+                <a href="index.php?id=4&name=Pizza4&price=10&desc=Pizza4&qt=1&vendor=romane_b12-facilitator-1@myges.fr&requestid=pizza4" class="btn btn-small" data-disable-with="Procesing.." data-method="post" rel="nofollow">Acheter</a>
             </div>
         </div>
     </div>
@@ -125,7 +125,6 @@ if(empty($_SESSION['vendors']))
 							}
 						}
 					}
-					var_dump($_SESSION['vendors']);
                     ?>
                     </tbody>
                 </table>

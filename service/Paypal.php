@@ -27,13 +27,13 @@ class Paypal
     public function __construct(){
 
         $this->user = 'romane_b12-facilitator-1_api1.myges.fr';
-        $this->email = 'romane_b12@myges.fr';
+        $this->email = 'romane_b12-facilitator-1@myges.fr';
         $this->api_paypal = 'https://api-3t.sandbox.paypal.com/nvp?';
         $this->password = '4RP8G3KM6R4YWNPA';
         $this->signature = 'AQU0e5vuZCvSg-XJploSa.sGUDlpA0Pcla5gynr5-NWk7PjD5tWFa8cT';
         $this->version = 98.0;
-        $this->cancelUrl = "http://localhost/https/cancel.php";
-        $this->returnUrl = "http://localhost/https/return.php";
+        $this->cancelUrl = "http://localhost/cancel.php";
+        $this->returnUrl = "http://localhost/return.php";
         $this->siteUrl = "www.google.fr";
         $this->currencyCode = "EUR";
         $this->culture = "FR";
@@ -91,10 +91,14 @@ class Paypal
             foreach($products as $vendor=>$items){
 				$requestid = $vendor;
 				foreach($items as $product){
+					if($product['quantity']>0 && $product['price']>0)
+					{
 					$url .=
 					"&L_PAYMENTREQUEST_".$j."_NAME".$i."=".urlencode($product['name']).
 					"&L_PAYMENTREQUEST_".$j."_QTY".$i."=".urlencode($product['quantity']).
 					"&L_PAYMENTREQUEST_".$j."_AMT".$i."=".urlencode($product['price']);
+					
+					}
 					$i++;
 					$total += ($product['quantity'] * $product['price']);
 					$requestid = $product['requestid'];
@@ -111,11 +115,6 @@ class Paypal
 				$total = 0;
 			}
         }
-		$url1 = explode("&",$url);
-		foreach($url1 as $key=>$value)
-		{
-			echo $value.'<br>';
-		}
         return $url;
     }
 
@@ -169,18 +168,23 @@ class Paypal
             var_dump($liste_param_paypal);
             if ($liste_param_paypal['ACK'] == 'Success')
             {
-
-                $requete = $this->constructUrlTransaction($liste_param_paypal['PAYMENTINFO_0_TRANSACTIONID']);
-                $ch = curl_init($requete);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                $resultat_paypal = curl_exec($ch);
-                $liste_param_paypal = $this->getParam($resultat_paypal);
-                var_dump($liste_param_paypal);exit;
-                echo 'Merci beaucoup ! <br>';
+				$i =0 ;
+				foreach($products as $transaction)
+				{
+					if($liste_param_paypal['PAYMENTINFO_'.$i.'_SELLERPAYPALACCOUNTID'] == $this->email)
+					{
+						$requete = $this->constructUrlTransaction($liste_param_paypal['PAYMENTINFO_'.$i.'_TRANSACTIONID']);
+						$ch = curl_init($requete);
+						curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+						$resultat_paypal = curl_exec($ch);
+						echo '<br><br>';
+						$liste_param_paypal = $this->getParam($resultat_paypal);
+						var_dump($liste_param_paypal);
+					}
+						$i++;
+				}
             }
         }
-        curl_close($ch);
-        return "<p>Erreur de communication avec le serveur PayPal.<br />".$liste_param_paypal['L_SHORTMESSAGE0']."<br />".$liste_param_paypal['L_LONGMESSAGE0']."</p>";
     }
 }
