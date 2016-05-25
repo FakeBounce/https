@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(empty($_SESSION['vendors']))
+if(empty($_SESSION['vendors']) || (isset($_GET['annuler']) && $_GET['annuler'] == true ))
 {
 	$_SESSION['vendors'] = array();
 }
@@ -36,8 +36,8 @@ if(empty($_SESSION['vendors']))
 				$_SESSION['vendors']['vendor1@gmail.com'] = array();
 			}
 			array_push($_SESSION['vendors']['vendor1@gmail.com'], $product);
-		}
-		if($_GET['vendor'] == "vendor2@gmail.com")
+		} 
+		else if($_GET['vendor'] == "vendor2@gmail.com")
 		{
 			if(empty($_SESSION['vendors']['vendor2@gmail.com']))
 			{
@@ -45,7 +45,7 @@ if(empty($_SESSION['vendors']))
 			}
 			array_push($_SESSION['vendors']['vendor2@gmail.com'], $product);
 		}
-		if($_GET['vendor'] == "romane_b12-facilitator-1@myges.fr")
+		else if($_GET['vendor'] == "romane_b12-facilitator-1@myges.fr")
 		{
 			if(empty($_SESSION['vendors']['romane_b12-facilitator-1@myges.fr']))
 			{
@@ -125,11 +125,13 @@ if(empty($_SESSION['vendors']))
 							}
 						}
 					}
+
                     ?>
                     </tbody>
                 </table>
             </div>
             <a href="paiement.php">Paiement</a>
+            <a href="index.php?annuler=1" style="float:right;">Annuler</a>
         </div>
     </div>
 </div>

@@ -165,7 +165,7 @@ class Paypal
         else
         {
             $liste_param_paypal = $this->getParam($resultat_paypal); // Lance notre fonction qui dispatche le résultat obtenu en un array
-            var_dump($liste_param_paypal);
+			
             if ($liste_param_paypal['ACK'] == 'Success')
             {
 				$i =0 ;
@@ -180,6 +180,7 @@ class Paypal
 						$resultat_paypal = curl_exec($ch);
 						echo '<br><br>';
 						$liste_param_paypal = $this->getParam($resultat_paypal);
+						echo 'Liste de paramètres de notre transaction :';
 						var_dump($liste_param_paypal);
 					}
 						$i++;
