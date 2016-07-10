@@ -17,3 +17,5 @@ Les fonctions se trouvent dans le dossier services, fichier Paypal.php
 On peut appeler la function "payment" qui prend en paramètre le tableau ci-dessus pour être redirigé vers le site de Paypal avec les informations de commande.
 
 La fonction "responsePayment", qui prend en paramètre le token paypal, le PayerId et les produits vendu par le vendeur, va afficher les informations de la transaction.
+/!\ Cette fonction ne marche que si le vendeur correspond à celui qui utilise l'API (dans le cas où il y aurait plusieurs vendeurs sur votre plateforme).
+/!\ Je suis monsieur Maxime, je ne peux recevoir les informations de paiement de Monsieur Bertrand 
