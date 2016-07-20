@@ -9,6 +9,7 @@ Un tableau qui contient les vendeurs et leurs produits vendus.
 Il se présentera comme ceci: 
 [Nom_du_tableau][Nom_vendeur]=>[Tableau_produit]
 Le Nom_vendeur étant une clé et le Tableau_produit sa valeur, contenant les informations des produits (tableau associatif)
+Dans le tableau des produits, 4 variables sont nécéssaires : name (nom du produit) , quantity (quantité du produit), price (prix du produit) et requestid (qui correspond au nom de la transaction affichée sur le compte Paypal) 
 
 Exemple :
 
