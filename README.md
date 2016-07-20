@@ -13,7 +13,7 @@ Le Nom_vendeur étant une clé et le Tableau_produit sa valeur, contenant les in
 Exemple :
 
     $tableau = array();
-    $tableau = [[test@test.fr]=>[['name'=>'produit_1','quantity'=>10,'price'=>15]....],[vendeur2@test.fr]=>[['name'=>'produit_2','quantity'=>10,'price'=>20] ]
+    $tableau = [[test@test.fr]=>[['name'=>'produit_1','quantity'=>10,'price'=>15]....],[vendeur2@test.fr]=>[['name'=>'produit_2','quantity'=>10,'price'=>20]];
 
 Les fonctions se trouvent dans le dossier services, fichier Paypal.php
 On peut appeler la function "payment" qui prend en paramètre le tableau ci-dessus pour être redirigé vers le site de Paypal avec les informations de commande.
@@ -29,5 +29,5 @@ La fonction "responsePayment", qui prend en paramètre le token paypal, le Payer
 
 On instancie quand même la classe avant, exemple :
 
-    	$paypal = new \Service\Paypal();
+    	$paypal = new Paypal();
     	$call = $paypal->responsePayment($token,$Vendeur_ID,$mon_tableau);
